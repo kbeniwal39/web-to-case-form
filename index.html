@@ -1,143 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Contact Support - Web to Case</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-  
-  <!-- Google reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-  <script>
-    function timestamp() {
-      var response = document.getElementById("g-recaptcha-response");
-      if (response == null || response.value.trim() == "") {
-        var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
-        elems["ts"] = JSON.stringify(new Date().getTime());
-        document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
-      }
-    }
-    setInterval(timestamp, 500);
-  </script>
+<!--  ----------------------------------------------------------------------  -->
+<!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+<!--  If necessary, please modify the charset parameter to specify the        -->
+<!--  character set of your HTML page.                                        -->
+<!--  ----------------------------------------------------------------------  -->
 
-  <!-- Styles -->
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #eef2f3, #8e9eab);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-    }
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+ function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
+</script>
 
-    .container {
-      background: white;
-      margin-top: 40px;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 600px;
-    }
+<!--  ----------------------------------------------------------------------  -->
+<!--  NOTE: Please add the following <FORM> element to your page.             -->
+<!--  ----------------------------------------------------------------------  -->
 
-    h2 {
-      text-align: center;
-      color: #333;
-    }
+<form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DgK000004NGeT" method="POST">
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-      color: #333;
-    }
+<input type=hidden name='captcha_settings' value='{"keyname":"pk","fallback":"true","orgId":"00DgK000004NGeT","ts":""}'>
+<input type=hidden name="orgid" value="00DgK000004NGeT">
+<input type=hidden name="retURL" value="http://success.page">
 
-    input[type="text"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
+<!--  ----------------------------------------------------------------------  -->
+<!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+<!--  these lines if you wish to test in debug mode.                          -->
+<!--  <input type="hidden" name="debug" value=1>                              -->
+<!--  <input type="hidden" name="debugEmail"                                  -->
+<!--  value="beniwalkavita39@gmail.com">                                      -->
+<!--  ----------------------------------------------------------------------  -->
 
-    textarea {
-      resize: vertical;
-      height: 100px;
-    }
+<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
 
-    .g-recaptcha {
-      margin-top: 20px;
-    }
+<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
 
-    input[type="submit"] {
-      margin-top: 20px;
-      background-color: #0070d2;
-      color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
 
-    input[type="submit"]:hover {
-      background-color: #005bb5;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Contact Support</h2>
-    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DgK000004NGeT" method="POST">
-      <input type="hidden" name="captcha_settings" value='{"keyname":"pk","fallback":"true","orgId":"00DgK000004NGeT","ts":""}'>
-      <input type="hidden" name="orgid" value="00DgK000004NGeT">
-      <input type="hidden" name="retURL" value="http://">
+<label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /><br>
 
-      <label for="name">Contact Name</label>
-      <input id="name" name="name" type="text" maxlength="80" required>
+<label for="description">Description</label><textarea name="description"></textarea><br>
 
-      <label for="email">Email</label>
-      <input id="email" name="email" type="text" maxlength="80" required>
+<label for="type">Type</label><select  id="type" name="type"><option value="">--None--</option>
+<option value="Online">Online</option>
+<option value="Oncampus">Oncampus</option>
+</select><br>
 
-      <label for="subject">Subject</label>
-      <input id="subject" name="subject" type="text" maxlength="80" required>
+<div class="g-recaptcha" data-sitekey="6Ld9kVIrAAAAAIvS5jLiFKpB1t7JkvO9P3Wpse_b"></div><br>
+<input type="submit" name="submit">
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description" required></textarea>
-
-      <label for="type">Type</label>
-      <select id="type" name="type" required>
-        <option value="">--None--</option>
-        <option value="Mechanical">Mechanical</option>
-        <option value="Electrical">Electrical</option>
-        <option value="Electronic">Electronic</option>
-        <option value="Structural">Structural</option>
-        <option value="Other">Other</option>
-        <option value="CV Review">CV Review</option>
-        <option value="Cover Letter Review">Cover Letter Review</option>
-        <option value="Interview Preparation">Interview Preparation</option>
-        <option value="Job Search Guidance">Job Search Guidance</option>
-        <option value="LinkedIn Profile Support">LinkedIn Profile Support</option>
-        <option value="Internship Search">Internship Search</option>
-        <option value="Student Job (Werkstudent) Support">Student Job (Werkstudent) Support</option>
-        <option value="Career Counseling">Career Counseling</option>
-        <option value="Post-Graduation Planning">Post-Graduation Planning</option>
-        <option value="Online">Online</option>
-        <option value="Oncampus">Oncampus</option>
-      </select>
-
-      <div class="g-recaptcha" data-sitekey="6Ld9kVIrAAAAAIvS5jLiFKpB1t7JkvO9P3Wpse_b"></div>
-
-      <input type="submit" value="Submit Case">
-    </form>
-  </div>
-</body>
-</html>
+</form>

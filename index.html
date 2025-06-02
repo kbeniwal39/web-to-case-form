@@ -24,33 +24,47 @@
       background-color: #f4f6f9;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      padding: 40px;
+      align-items: center;
+      height: 100vh;
       margin: 0;
     }
 
     form {
       background: #ffffff;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
       width: 100%;
       box-sizing: border-box;
     }
 
+    .form-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .form-group {
+      flex: 1 1 48%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      flex: 1 1 100%;
+    }
+
     label {
       font-weight: 600;
-      display: block;
-      margin: 20px 0 5px;
+      margin-bottom: 5px;
       color: #333;
     }
 
     input[type="text"],
     textarea,
     select {
-      width: 100%;
-      padding: 10px 12px;
+      padding: 8px 10px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
@@ -59,15 +73,15 @@
 
     textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 80px;
     }
 
     .g-recaptcha {
-      margin-top: 20px;
+      margin-top: 16px;
     }
 
     input[type="submit"] {
-      margin-top: 25px;
+      margin-top: 20px;
       background-color: #0070d2;
       color: white;
       font-size: 16px;
@@ -86,58 +100,65 @@
 <body>
 
   <form id="caseForm" action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DgK000004NGeT" method="POST">
-
     <input type="hidden" name="captcha_settings" value='{"keyname":"pk","fallback":"true","orgId":"00DgK000004NGeT","ts":""}'>
     <input type="hidden" name="orgid" value="00DgK000004NGeT">
     <input type="hidden" name="retURL" value="http://success.page">
 
-    <!-- Optional Debug -->
-    <!--
-    <input type="hidden" name="debug" value=1>
-    <input type="hidden" name="debugEmail" value="beniwalkavita39@gmail.com">
-    -->
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">Contact Name</label>
+        <input id="name" maxlength="80" name="name" type="text" required />
+      </div>
 
-    <label for="name">Contact Name</label>
-    <input id="name" maxlength="80" name="name" size="20" type="text" required />
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" maxlength="80" name="email" type="text" required />
+      </div>
 
-    <label for="email">Email</label>
-    <input id="email" maxlength="80" name="email" size="20" type="text" required />
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input id="phone" maxlength="40" name="phone" type="text" required />
+      </div>
 
-    <label for="phone">Phone</label>
-    <input id="phone" maxlength="40" name="phone" size="20" type="text" required />
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <input id="subject" maxlength="80" name="subject" type="text" required />
+      </div>
 
-    <label for="subject">Subject</label>
-    <input id="subject" maxlength="80" name="subject" size="20" type="text" required />
+      <div class="form-group full">
+        <label for="description">Description</label>
+        <textarea name="description" required></textarea>
+      </div>
 
-    <label for="description">Description</label>
-    <textarea name="description" required></textarea>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" name="type" required>
+          <option value="">--None--</option>
+          <option value="Online">Online</option>
+          <option value="Oncampus">Oncampus</option>
+        </select>
+      </div>
 
-    <label for="type">Type</label>
-    <select id="type" name="type" required>
-      <option value="">--None--</option>
-      <option value="Online">Online</option>
-      <option value="Oncampus">Oncampus</option>
-    </select>
-
-    <label for="recordType">Case Category</label>
-    <select id="recordType" name="recordType">
-      <option value="">--Select Category--</option>
-      <option value="012gK0000016fXlQAI">Application Document Check</option>
-      <option value="012gK0000016fZNQAY">Job Search Support</option>
-    </select>
+      <div class="form-group">
+        <label for="recordType">Case Category</label>
+        <select id="recordType" name="recordType" required>
+          <option value="">--Select Category--</option>
+          <option value="012gK0000016fXlQAI">Application Document Check</option>
+          <option value="012gK0000016fZNQAY">Job Search Support</option>
+        </select>
+      </div>
+    </div>
 
     <div class="g-recaptcha" data-sitekey="6Ld9kVIrAAAAAIvS5jLiFKpB1t7JkvO9P3Wpse_b"></div>
-
     <input type="submit" name="submit" value="Submit Case">
   </form>
 
   <script>
-    // Ensure reCAPTCHA is completed before submitting
     document.getElementById("caseForm").addEventListener("submit", function(e) {
       var response = grecaptcha.getResponse();
       if (response.length === 0) {
         alert("Please complete the reCAPTCHA.");
-        e.preventDefault(); // Stop form submission
+        e.preventDefault();
       }
     });
   </script>
